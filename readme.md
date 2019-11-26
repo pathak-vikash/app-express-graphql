@@ -1,7 +1,7 @@
 ## GraphQL Queries
 ------------
 
-###1. Find Books
+### 1. Find Books
 
 ```
 {
@@ -14,7 +14,7 @@
 
 ```
 
-###2. Get Book
+### 2. Get Book
 
 ```
 {
@@ -27,7 +27,7 @@
 
 ```
 
-###3. Get Book with Author
+### 3. Get Book with Author
 
 ```
 {
@@ -43,7 +43,7 @@
 }
 ```
 
-###1. Find Authors
+### 4. Find Authors
 
 ```
 {
@@ -56,7 +56,7 @@
 
 ```
 
-###2. Get Author
+### 5. Get Author
 ```
 {
    author(id: 2) {
@@ -67,7 +67,7 @@
 }
 ```
 
-###3. Get Author with Books
+### 6. Get Author with Books
 
 ```
 {
