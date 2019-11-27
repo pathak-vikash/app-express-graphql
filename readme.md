@@ -1,8 +1,10 @@
 
 #### Dependencies
+```
 Node: ^10.13.0
 npm: 6.4.1
 nodemon(optional) - used to run application
+```
 
 To install nodemon
 > npm install -g nodemon --save
