@@ -24,6 +24,11 @@ To install nodemon
 "mongoose": "^5.7.12"
 ```
 
+#### Start server
+> npm start
+
+Browse: http://localhost:4000/graphql
+
 ### Documentation
 https://github.com/pathak-vikash/app-express-graphql/tree/master/server
 
@@ -43,6 +48,10 @@ https://github.com/pathak-vikash/app-express-graphql/tree/master/server
 "react-scripts": "3.2.0"
 ```
 
+#### Start server
+> npm start
+
+Browse: http://localhost:3000
 
 #### Documentation
 https://github.com/pathak-vikash/app-express-graphql/tree/master/client
