@@ -82,3 +82,31 @@
   }
 }
 ```
+
+### 7. Add Author
+
+```
+mutation {
+  addAuthor(name: "Vikash Pathak", age: 29){
+    id,
+    name,
+    age
+  }
+}
+```
+
+### 8. Add Book
+
+```
+mutation {
+  addBook(name: "Book1", genre: "Fantasy", authorId:"5ddddd01edd18340e0d9c816"){
+    id,
+    name,
+  	genre,
+    author {
+      id,
+      name
+    }
+  }
+}
+```
