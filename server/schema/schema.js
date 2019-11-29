@@ -2,6 +2,8 @@ const graphql = require('graphql')
 const Book = require("../models/book")
 const Author = require("../models/author")
 
+const {makeExecutableSchema} = require("graphql-tools/dist/makeExecutableSchema")
+
 const {
     GraphQLObjectType,
     GraphQLList,
@@ -12,6 +14,57 @@ const {
     GraphQLNonNull
 } = graphql
 
+const typeDefs = `
+    type Book {
+        id: ID
+        name: String!
+        genre: String!
+        authorId: String!
+        author: Author
+    }
+
+    type Author {
+        id: ID
+        name: String!
+        age: String!
+        books: [Book]
+    }
+
+    type Query {
+        books: [Book]
+        book(id: ID): Book
+        authors: [Author]
+        author(id: ID): Author
+    }
+`;
+
+const resolvers =  {
+    Query: {
+        books: (parent, args) => {
+            return Book.find({});
+        },
+        book: ({id}, args) => {
+            return Book.findById(id);
+        },
+        authors: (parent, args) => {
+            return Author.find({});
+        },
+        author: (parent, args) => {
+            return Author.findById(args.id)
+        }
+    },
+    Book: {
+        author: ({authorId}, args) => {
+            return Author.findById(authorId);
+        }
+    },
+    Author: {
+        books: ({id}, args) => {
+            return Book.find({authorId: id})
+        }
+    }
+};
+/*
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({
@@ -120,3 +173,11 @@ module.exports = new GraphQLSchema ({
     query:RootQuery,
     mutation: Mutation
 })
+
+*/
+
+module.exports = new makeExecutableSchema ({
+    typeDefs,
+    resolvers
+})
+
