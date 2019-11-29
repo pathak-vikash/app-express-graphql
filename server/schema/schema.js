@@ -26,7 +26,7 @@ const typeDefs = `
     type Author {
         id: ID
         name: String!
-        age: String!
+        age: Int!
         books: [Book]
     }
 
@@ -35,6 +35,11 @@ const typeDefs = `
         book(id: ID): Book
         authors: [Author]
         author(id: ID): Author
+    }
+
+    type Mutation {
+        addBook(name: String!, genre: String!, authorId: String!): Book!
+        addAuthor(name: String!, age: Int!): Author!
     }
 `;
 
@@ -61,6 +66,25 @@ const resolvers =  {
     Author: {
         books: ({id}, args) => {
             return Book.find({authorId: id})
+        }
+    },
+    Mutation: {
+        addAuthor: (parent, args) => {
+            let author = new Author ({
+                name: args.name,
+                age: args.age
+            });
+
+            return author.save();
+        },
+        addBook: (parent, args) => {
+            let book = new Book({
+                name: args.name,
+                genre: args.genre,
+                authorId: args.authorId
+            })
+
+            return book.save();
         }
     }
 };
