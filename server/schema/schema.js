@@ -2,6 +2,8 @@ const graphql = require('graphql')
 const Book = require("../models/book")
 const Author = require("../models/author")
 
+const {makeExecutableSchema} = require("graphql-tools/dist/makeExecutableSchema")
+
 const {
     GraphQLObjectType,
     GraphQLList,
@@ -12,6 +14,81 @@ const {
     GraphQLNonNull
 } = graphql
 
+const typeDefs = `
+    type Book {
+        id: ID
+        name: String!
+        genre: String!
+        authorId: String!
+        author: Author
+    }
+
+    type Author {
+        id: ID
+        name: String!
+        age: Int!
+        books: [Book]
+    }
+
+    type Query {
+        books: [Book]
+        book(id: ID): Book
+        authors: [Author]
+        author(id: ID): Author
+    }
+
+    type Mutation {
+        addBook(name: String!, genre: String!, authorId: String!): Book!
+        addAuthor(name: String!, age: Int!): Author!
+    }
+`;
+
+const resolvers =  {
+    Query: {
+        books: (parent, args) => {
+            return Book.find({});
+        },
+        book: ({id}, args) => {
+            return Book.findById(id);
+        },
+        authors: (parent, args) => {
+            return Author.find({});
+        },
+        author: (parent, args) => {
+            return Author.findById(args.id)
+        }
+    },
+    Book: {
+        author: ({authorId}, args) => {
+            return Author.findById(authorId);
+        }
+    },
+    Author: {
+        books: ({id}, args) => {
+            return Book.find({authorId: id})
+        }
+    },
+    Mutation: {
+        addAuthor: (parent, args) => {
+            let author = new Author ({
+                name: args.name,
+                age: args.age
+            });
+
+            return author.save();
+        },
+        addBook: (parent, args) => {
+            let book = new Book({
+                name: args.name,
+                genre: args.genre,
+                authorId: args.authorId
+            })
+
+            return book.save();
+        }
+    }
+};
+/*
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({
@@ -120,3 +197,11 @@ module.exports = new GraphQLSchema ({
     query:RootQuery,
     mutation: Mutation
 })
+
+*/
+
+module.exports = new makeExecutableSchema ({
+    typeDefs,
+    resolvers
+})
+
