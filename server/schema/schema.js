@@ -19,7 +19,7 @@ const typeDefs = `
         id: ID
         name: String!
         genre: String!
-        authorId: String!
+        authorId: ID!
         author: Author
     }
 
@@ -38,7 +38,7 @@ const typeDefs = `
     }
 
     type Mutation {
-        addBook(name: String!, genre: String!, authorId: String!): Book!
+        addBook(name: String!, genre: String!, authorId: ID!): Book!
         addAuthor(name: String!, age: Int!): Author!
     }
 `;
@@ -48,14 +48,14 @@ const resolvers =  {
         books: (parent, args) => {
             return Book.find({});
         },
-        book: ({id}, args) => {
+        book: (parent, {id}) => {
             return Book.findById(id);
         },
         authors: (parent, args) => {
             return Author.find({});
         },
-        author: (parent, args) => {
-            return Author.findById(args.id)
+        author: (parent, {id}) => {
+            return Author.findById(id)
         }
     },
     Book: {
