@@ -1,4 +1,4 @@
-# Library App GraphQL, ReactJs with appllo-client, Node & Express.
+## Library App - GraphQL, ReactJs with appllo-client, Node & Express.
 
 ![App screenshot](https://github.com/pathak-vikash/app-express-graphql/blob/master/screenshot.png)
 
